@@ -11,14 +11,14 @@ function Signup() {
     event.preventDefault();
     setSubmitting(true);
     const formData = {
-      name: event.target.name.value,
+      username: event.target.name.value,
       email: event.target.email.value,
       password: event.target.password.value,
     };
     try {
-      await axios.post("https://loginapi21-4lr2.onrender.com/signup", formData);
+      await axios.post("https://apiestate21.onrender.com/api/signup", formData);
       setSuccess(true);
-      window.location.href = "/home";
+      window.location.href = "/";
     } catch (error) {
       if (error.response && error.response.status === 409) {
         setError(
@@ -36,7 +36,14 @@ function Signup() {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundImage: `url("https://img.freepik.com/premium-vector/dark-purple-vector-background-with-dots-lines_6869-1115.jpg?w=996")`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        height: "100vh",
+      }}
+    >
       <div>
         <section className="form-container">
           <form onSubmit={handleSubmit}>
@@ -76,7 +83,7 @@ function Signup() {
             {error && <p className="error">{error}</p>}
             {success && <p className="success">Registration successful!</p>}
             <p>
-              already have an account? <Link to="/">Login now</Link>
+              already have an account? <Link to="/login">Login now</Link>
             </p>
             <input
               type="submit"

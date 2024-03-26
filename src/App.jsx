@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
-import "./App.css";
-import "/src/style.css";
-import "bootstrap";
-import Home from "./Components/Home";
-import axios from "axios";
+import "../src/style.css";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Link,
   useLocation,
+  Navigate,
 } from "react-router-dom";
+import Home from "./Components/Home";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import Contact from "./Components/Contact";
@@ -19,6 +17,7 @@ import View from "./Components/view";
 import Display from "./Components/Display";
 import Post from "./Components/post";
 import Search from "./Components/Search";
+import axios from "axios";
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -48,10 +47,22 @@ function App() {
       <Router>
         <ConditionalHeader />
         <Routes>
-          <Route path="/" element={<Login setLogin={setLogin} />} />
-          {!login && (
+          <Route path="/login" element={<Login setLogin={setLogin} />} />
+          {!login ? (
             <>
-              <Route path="/home" element={<Home />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/details/:id" element={<View />} />
+              <Route path="/property" element={<Navigate to="/login" />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/postproperty" element={<Navigate to="/login" />} />
+            </>
+          ) : (
+            <>
+              <Route path="/postproperty" element={<Post />} />
+              <Route path="/" element={<Home />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/about" element={<About />} />
               <Route path="/signup" element={<Signup />} />
@@ -60,11 +71,11 @@ function App() {
                 path="/property"
                 element={<Display listings={listings} loading={loading} />}
               />
-              <Route path="/postproperty" element={<Post />} />
               <Route path="/search" element={<Search />} />
             </>
           )}
         </Routes>
+
         <ConditionalFooter />
       </Router>
     </>
@@ -73,7 +84,7 @@ function App() {
 
 function ConditionalHeader() {
   let location = useLocation();
-  if (location.pathname === "/" || location.pathname === "/signup") {
+  if (location.pathname === "") {
     return null;
   }
 
@@ -81,7 +92,7 @@ function ConditionalHeader() {
     <header className="header">
       <nav className="navbar nav-1">
         <section className="flex" style={{ height: "6.5rem" }}>
-          <Link to="/home" className="logo" style={{ textDecoration: "none" }}>
+          <Link to="/" className="logo" style={{ textDecoration: "none" }}>
             <i className="fas fa-house" />
             <img
               src={
@@ -95,14 +106,6 @@ function ConditionalHeader() {
               }}
             />
           </Link>
-          <ul>
-            <li>
-              <Link className="post" to="/postproperty">
-                post property
-                <i className="fas fa-paper-plane" />
-              </Link>
-            </li>
-          </ul>
         </section>
       </nav>
       <nav className="navbar nav-2">
@@ -111,13 +114,13 @@ function ConditionalHeader() {
           <div className="menu">
             <ul>
               <li>
-                <Link to="/home">Home</Link>
+                <Link to="/">Home</Link>
               </li>
               <li>
                 <Link to="/property">buy</Link>
               </li>
               <li>
-                <a href="#">
+                <a href="#sell">
                   sell
                   <i className="fas fa-angle-down" />
                 </a>
@@ -153,7 +156,7 @@ function ConditionalHeader() {
               </a>
               <ul>
                 <li>
-                  <Link to="/">logout</Link>
+                  <Link to="/login">login</Link>
                 </li>
                 <li>
                   <Link to="/signup">register</Link>
@@ -170,7 +173,7 @@ function ConditionalHeader() {
 function ConditionalFooter() {
   let location = useLocation();
   if (
-    location.pathname === "/" ||
+    location.pathname === "/login" ||
     location.pathname === "/signup" ||
     location.pathname === "/postproperty"
   ) {
@@ -200,7 +203,7 @@ function ConditionalFooter() {
         </div>
         <div className="box"></div>
         <div className="box">
-          <Link to="/home">
+          <Link to="/">
             <span>Home</span>
           </Link>
           <Link to="/about">

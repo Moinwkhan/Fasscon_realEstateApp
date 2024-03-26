@@ -22,9 +22,6 @@ function View() {
     fetchData();
   }, [id]);
 
-  if (!property) {
-    return <div></div>;
-  }
 
   const handelSubmit = () => {
     Navigate("/property");
@@ -33,73 +30,77 @@ function View() {
   return (
     <div>
       <div>
-        <section className="view-property">
-          <div className="details">
-            <div className="thumb">
-              <div className="big-image">
-                <img src={property.image} alt={property.title} />
+        {!property ? (
+          <div style={{marginLeft:"45%", marginTop:"0%", fontSize:30, height:"25vh"}}>Loading...</div>
+        ) : (
+          <section className="view-property">
+            <div className="details">
+              <div className="thumb">
+                <div className="big-image">
+                  <img src={property.image} alt={property.title} />
+                </div>
+                <div className="small-images">
+                  {/* Add small images if available */}
+                </div>
               </div>
-              <div className="small-images">
-                {/* Add small images if available */}
-              </div>
-            </div>
-            <h3 className="name">{property.title}</h3>
-            <p className="location">
-              <i className="fas fa-map-marker-alt" />
-              <span>{property.location}</span>
-            </p>
-            <div className="info">
-              <p>
-                <i className="fas fa-tag" />
-                <span>Rs. {property.price}/-</span>
+              <h3 className="name">{property.title}</h3>
+              <p className="location">
+                <i className="fas fa-map-marker-alt" />
+                <span>{property.location}</span>
               </p>
-              <p>
-                <i className="fas fa-user" />
-                <span>{property.owner}</span>
-              </p>
-              <p>
-                <i className="fas fa-phone" />
-                <a href={`tel:${property.contact}`}>{property.contact}</a>
-              </p>
-              <p>
-                <i className="fas fa-building" />
-                <span>{property.type}</span>
-              </p>
-              <p>
-                <i className="fas fa-house" />
-                <span>{property.status}</span>
-              </p>
-              <p>
-                <i className="fas fa-calendar" />
-                <span>{property.date}</span>
-              </p>
-            </div>
-            <h3 className="title">details</h3>
-            <div className="flex">
-              <div className="box">
+              <div className="info">
                 <p>
-                  <i>rooms :</i>
-                  <span>{property.bedrooms}</span>
+                  <i className="fas fa-tag" />
+                  <span>Rs. {property.price}/-</span>
                 </p>
                 <p>
-                  <i>deposit amount :</i>
-                  <span>Atleast 40%</span>
+                  <i className="fas fa-user" />
+                  <span>{property.owner}</span>
                 </p>
                 <p>
-                  <i>status :</i>
-                  <span>{property.title}</span>
+                  <i className="fas fa-phone" />
+                  <a href={`tel:${property.contact}`}>{property.contact}</a>
                 </p>
-                {/* Add more details */}
+                <p>
+                  <i className="fas fa-building" />
+                  <span>{property.type}</span>
+                </p>
+                <p>
+                  <i className="fas fa-house" />
+                  <span>{property.status}</span>
+                </p>
+                <p>
+                  <i className="fas fa-calendar" />
+                  <span>{property.date}</span>
+                </p>
               </div>
-              {/* Add more details boxes */}
+              <h3 className="title">details</h3>
+              <div className="flex">
+                <div className="box">
+                  <p>
+                    <i>rooms :</i>
+                    <span>{property.bedrooms}</span>
+                  </p>
+                  <p>
+                    <i>deposit amount :</i>
+                    <span>Atleast 40%</span>
+                  </p>
+                  <p>
+                    <i>status :</i>
+                    <span>{property.title}</span>
+                  </p>
+                  {/* Add more details */}
+                </div>
+                {/* Add more details boxes */}
+              </div>
+              <h3 className="title">description</h3>
+              <p className="description">{property.description}</p>
+              <button onClick={handelSubmit} className="inline-btn">
+                ~ Back
+              </button>
             </div>
-            <h3 className="title">description</h3>
-            <p className="description">{property.description}</p>
-            <button onClick={handelSubmit} className="inline-btn">
-              ~ Back
-            </button>
-          </div>
-        </section>
+          </section>
+        )}
       </div>
     </div>
   );

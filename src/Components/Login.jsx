@@ -1,28 +1,29 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login({ setLogin }) {
   const [loginData, setLoginData] = useState({
-    name: "",
+    username: "",
     password: "",
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://loginapi21-4lr2.onrender.com/login",
+        "https://apiestate21.onrender.com/api/login",
         loginData
       );
       if (response.status === 200) {
         setIsLoggedIn(true);
         setLogin(true);
-        window.location.href = "/home";
+        navigate("/");
       } else {
         window.alert("Invalid username or password.");
       }
@@ -48,50 +49,45 @@ function Login({ setLogin }) {
   return (
     <div>
       <div className="background">
-        <h1 className="logo21"> ProPulse Real Estate</h1>
-        <h1 className="start">
-          <a href="#post">Start Buying {">"}</a>{" "}
-        </h1>
-      </div>
-      <div>
-        <section className="form-container" id="post">
-          <form onSubmit={handleSubmit}>
-            <h3>welcome back!</h3>
-            <input
-              type="name"
-              name="name"
-              required
-              maxLength={50}
-              placeholder="enter your username"
-              className="box"
-              value={loginData.name}
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              name="password"
-              required
-              maxLength={20}
-              placeholder="enter your password"
-              className="box"
-              value={loginData.password}
-              onChange={handleChange}
-            />
+        <div>
+          <section className="form-container" id="post">
+            <form onSubmit={handleSubmit}>
+              <h3>First Log in Your account</h3>
+              <input
+                type="text"
+                name="username"
+                required
+                placeholder="enter your username"
+                className="box"
+                value={loginData.username}
+                onChange={handleChange}
+              />
+              <input
+                type="password"
+                name="password"
+                required
+                maxLength={20}
+                placeholder="enter your password"
+                className="box"
+                value={loginData.password}
+                onChange={handleChange}
+              />
 
-            {alert && <p className="error">{alert}</p>}
-            {isLoggedIn && <p className="success">Login successful!</p>}
-            <p>
-              do not have an account? <Link to="/signup">register new</Link>
-            </p>
-            <input
-              type="submit"
-              value={loading ? "Logging in..." : "Login now"}
-              name="submit"
-              className="btn"
-              disabled={loading}
-            />
-          </form>
-        </section>
+              {alert && <p className="error">{alert}</p>}
+              {isLoggedIn && <p className="success">Login successful!</p>}
+              <p>
+                do not have an account? <Link to="/signup">register new</Link>
+              </p>
+              <input
+                type="submit"
+                value={loading ? "Logging in..." : "Login now"}
+                name="submit"
+                className="btn"
+                disabled={loading}
+              />
+            </form>
+          </section>
+        </div>
         <footer>
           <div>
             <p

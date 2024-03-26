@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import View from "./view";
 
 function Display({ listings, loading }) {
   if (loading) {
@@ -37,7 +36,6 @@ function Display({ listings, loading }) {
                 <Link to={`/details/${listing._id}`} className="btn">
                   View Property
                 </Link>
-                <View id={listing._id} />
               </div>
             ))}
         </div>

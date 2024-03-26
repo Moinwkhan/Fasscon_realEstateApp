@@ -27,7 +27,6 @@ function Home() {
   return (
     <div>
       <div className="home">
-        {/* <Filter /> */}
         <div className="center">
           <video
             id="homeVideo"

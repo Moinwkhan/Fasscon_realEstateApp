@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 function Post() {
   const [loading, setLoading] = useState(false);
@@ -42,6 +42,7 @@ function Post() {
       );
       setLoading(false);
       alert("Successfully post");
+      Navigate("/")
       window.location.reload();
     } catch (error) {
       console.error(error.message);
